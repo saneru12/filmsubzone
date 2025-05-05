@@ -1,0 +1,134 @@
+
+.banner-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .banner-img {
+    height: 300px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .banner-img {
+    height: 300px;
+  }
+}
+
+  .movie-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .movie-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .movie-poster {
+      height: 350px;
+      object-fit: cover;
+    }
+
+    .movie-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .badge-sub {
+      background-color: #ff4d4d;
+    }
+
+    .container-fluid {
+      background-color: rgb(210, 211, 208);;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      background-color: #333;
+      color: white;
+      font-size: 14px;
+    }
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      background-color: #333;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Styling for the navbar brand */
+    .navbar-brand {
+      color: white;
+      text-decoration: none;
+      font-size: 24px;
+      position: relative;
+      padding: 5px;
+      transition: color 0.3s ease;
+    }
+
+    /* Glow effect for the brand */
+    .navbar-brand:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #ff00ff, #00ffff);
+      opacity: 0.5;
+      transform: scale(0);
+      transition: transform 0.3s ease;
+      border-radius: 5px;
+      z-index: -1;
+    }
+
+    /* Hover effect - Glowing animation */
+    .navbar-brand:hover {
+      color: #00ff00; /* Change text color */
+    }
+
+    .navbar-brand:hover:after {
+      transform: scale(1);
+    }
+
+    /* Optional - animation for glow */
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 15px #ff00ff;
+      }
+      50% {
+        text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff;
+      }
+      100% {
+        text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 15px #ff00ff;
+      }
+    }
+
+    /* Applying the glow animation */
+    .navbar-brand:hover {
+      animation: glow 1.5s ease-in-out infinite;
+    }
+    
+    .highlight-btn {
+      border: 2px solid #ff0000;
+      background-color: #ffcccc;
+      color: #ff0000;
+      font-weight: bold;
+    }
+    
+    
