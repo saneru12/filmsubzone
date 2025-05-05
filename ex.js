@@ -10,11 +10,17 @@
     const container = document.getElementById('movieList');
     //loding
     container.innerHTML = `
-    <div class="col-12 text-center">
-    <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." style="width: 50px; height: 50px;">
-    <p class="text-muted">Loading...</p>
-    </div>
-    `;
+  <div class="col-12 d-flex justify-content-center">
+    <dotlottie-player 
+      src="https://lottie.host/ddf15a75-9c01-4689-a871-2ce907ae0f7c/vIDwnXf6Vv.lottie" 
+      background="transparent" 
+      speed="1" 
+      style="width: 300px; height: 300px;" 
+      loop 
+      autoplay>
+    </dotlottie-player>
+  </div>
+`;
 
 
     fetch(sheetURL)
