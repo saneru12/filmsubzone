@@ -119,4 +119,14 @@
       font-weight: bold;
     }
     
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 10px;
+}
+.carousel-caption h5 {
+  color: #fff;
+  font-weight: bold;
+}
+
     
