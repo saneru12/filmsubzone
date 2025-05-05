@@ -6,17 +6,7 @@
   display: block;
 }
 
-@media (min-width: 768px) {
-  .banner-img {
-    height: 300px;
-  }
-}
 
-@media (min-width: 1024px) {
-  .banner-img {
-    height: 300px;
-  }
-}
 
   .movie-card {
       transition: transform 0.3s, box-shadow 0.3s;
