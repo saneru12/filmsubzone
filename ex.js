@@ -169,3 +169,12 @@ function shareMovie(title, url) {
       .catch(() => alert("Could not copy link."));
   }
 }
+
+var myCarousel = document.querySelector('#carouselExampleCaptions');
+var carousel = new bootstrap.Carousel(myCarousel, {
+  interval: 3000,
+  pause: false,
+  ride: 'carousel',
+  wrap: true // Ensure loop is enabled!
+});
+

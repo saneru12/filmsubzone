@@ -35,7 +35,7 @@
     }
 
     .container-fluid {
-      background-color: rgb(210, 211, 208);;
+      background-color: rgb(43, 44, 42);;
     }
     footer {
       position: fixed;
@@ -61,7 +61,7 @@
 
     /* Styling for the navbar brand */
     .navbar-brand {
-      color: rgb(0, 0, 0);
+      color: rgb(254, 254, 254);
       text-decoration: none;
       font-size: 24px;
       position: relative;
