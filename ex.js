@@ -1,6 +1,4 @@
-
 const sheetURL = 'https://script.google.com/macros/s/AKfycbx_sI2rvw2sWjANExxHziSwIOMIc88WjwXwwsJbspPL4ZmhA5E9-LvJhtaZcS4pIo8/exec';
-
 let selectedLanguage = 'null';
 let selectedGenre = 'null';
 let selectedYear = 'null';
@@ -10,21 +8,6 @@ function loadMovies() {
   function generateMovieId(title, year) {
     return `${title}-${year}`.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]/g, '');
   }
-  
-  function shareMovie(title, url) {
-    if (navigator.share) {
-      navigator.share({
-        title: title,
-        text: `Check out this movie: ${title}`,
-        url: url
-      }).catch(err => console.error("Share failed:", err));
-    } else {
-      navigator.clipboard.writeText(location.origin + '/' + url)
-        .then(() => alert("Link copied to clipboard!"))
-        .catch(() => alert("Could not copy link."));
-    }
-  }
-  
   
   const container = document.getElementById('movieList');
   //loding
@@ -88,9 +71,8 @@ function loadMovies() {
           ? movie.genres.split(',').map(g => `<span class="badge bg-secondary me-1">${g.trim()}</span>`).join(' ')
           : '';
       
-        // Generate a unique ID from title + year
-        const movieId = generateMovieId(movie.title, movie.year);
-        const moviePageURL = `movie.html?id=${movieId}`;
+          const movieId = generateMovieId(movie.title, movie.year);
+          const moviePageURL = `movie.html?id=${movieId}`;
       
         const card = `
           <div class="col-md-3 col-sm-6 mb-4">
@@ -172,6 +154,18 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   loadMovies();
+  
 });
-
-
+function shareMovie(title, url) {
+  if (navigator.share) {
+    navigator.share({
+      title: title,
+      text: `Check out this movie: ${title}`,
+      url: url
+    }).catch(err => console.error("Share failed:", err));
+  } else {
+    navigator.clipboard.writeText(location.origin + '/' + url)
+      .then(() => alert("Link copied to clipboard!"))
+      .catch(() => alert("Could not copy link."));
+  }
+}
