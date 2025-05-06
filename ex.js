@@ -7,6 +7,12 @@
   let searchKeyword = '';
 
   function loadMovies() {
+
+    function generateMovieId(title, year) {
+      return `${title}-${year}`.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]/g, '');
+    }
+    
+    
     const container = document.getElementById('movieList');
     //loding
     container.innerHTML = `
@@ -68,7 +74,11 @@
           const genreBadges = movie.genres
             ? movie.genres.split(',').map(g => `<span class="badge bg-secondary me-1">${g.trim()}</span>`).join(' ')
             : '';
-
+        
+          // 👉 Generate ID from title + year
+          const movieId = generateMovieId(movie.title, movie.year);
+          const moviePageURL = `movie.html?id=${movieId}`;
+        
           const card = `
             <div class="col-md-3 col-sm-6 mb-4">
               <div class="card movie-card h-100">
@@ -84,12 +94,13 @@
                   <a href="${movie.subtitle}" class="btn btn-outline-primary btn-sm w-100 mt-2">උපසිරැසි</a>
                   <a href="${movie.link1080}" class="btn btn-outline-primary btn-sm w-100 mt-2">1080p</a>
                   <a href="${movie.link720}" class="btn btn-outline-primary btn-sm w-100 mt-2">720p</a>
+                  <button onclick="shareMovie('${movie.title}', '${moviePageURL}')" class="btn btn-outline-success btn-sm w-100 mt-2">Share</button>
                 </div>
               </div>
             </div>
           `;
           container.innerHTML += card;
-        });
+        })
       })
       .catch(error => {
         container.innerHTML = `<div class="col-12"><p class="text-center text-danger">Error loading data.Relode the page</p></div>`;
@@ -143,4 +154,16 @@
     loadMovies();
   });
 
+  function shareMovie(title, url) {
+    if (navigator.share) {
+      navigator.share({
+        title: title,
+        text: `Check out this movie: ${title}`,
+        url: url
+      }).catch(err => console.error("Share failed:", err));
+    } else {
+      alert("Sharing not supported on this browser.");
+    }
+  }
+  
 
