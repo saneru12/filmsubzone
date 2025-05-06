@@ -28,6 +28,7 @@
       text-overflow: ellipsis;
       font-size: 1rem;
       font-weight: bold;
+      color: black;
     }
 
     .badge-sub {

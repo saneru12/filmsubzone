@@ -89,18 +89,21 @@
    container.innerHTML = `
   <div class="row">
     <div class="col-md-4 position-relative">
-      <img src="${movie.poster}" class="img-fluid rounded shadow" alt="${movie.title}">
-      <div style="position: absolute; top: 10px; left: 10px; width: 80px; height: 80px; pointer-events: none;">
+      <!-- Movie poster -->
+      <img src="${movie.poster}" class="img-fluid rounded shadow" alt="${movie.title}" id="movie-poster">
+      
+      <!-- Lottie gif (background) should match image size -->
+      <div class="lottie-container">
         <dotlottie-player
           src="https://lottie.host/97384d5b-43c8-4ce3-b332-9579691306b6/GtBfkLQ0NX.lottie"
           background="transparent"
           speed="1"
-          style="width:900px; height:900px; padding:100px;"
           loop
           autoplay>
         </dotlottie-player>
       </div>
     </div>
+    
     <div class="col-md-8">
       <h2>${movie.title} (${movie.year})</h2>
       <p>
@@ -119,6 +122,41 @@
   </div>
 `;
 
+// Add the necessary CSS for Lottie animation positioning and responsiveness
+const style = document.createElement('style');
+style.innerHTML = `
+  .lottie-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Match the width of the image */
+    height: 100%; /* Match the height of the image */
+    pointer-events: none; /* Make sure Lottie does not block interactions */
+  }
+
+  /* Make the Lottie player fill the container */
+  .lottie-container dotlottie-player {
+    width: 100%; /* Match the width of the container */
+    height: 100%; /* Match the height of the container */
+    object-fit: cover; /* Ensure the gif fully covers the container without distortion */
+  }
+
+  /* Responsive sizing */
+  @media (max-width: 768px) {
+    .lottie-container {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .lottie-container {
+      width: 100%;
+      height: 100%;
+    }
+  }
+`;
+document.head.appendChild(style);
 
       })
       .catch(err => {
