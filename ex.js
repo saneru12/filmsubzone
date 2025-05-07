@@ -1,4 +1,4 @@
-const sheetURL = 'https://script.google.com/macros/s/AKfycby7qkreQkbmunpW9QdD01LgLqlyVOFjFxUMLG9sstpo4eJ_9e95QuFmR-PP6P5HaZRz/exec';
+const sheetURL = 'http://localhost:3000/movies';
 let selectedLanguage = 'null';
 let selectedGenre = 'null';
 let selectedYear = 'null';
