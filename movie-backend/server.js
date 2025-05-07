@@ -51,7 +51,9 @@ app.get('/movies', async (req, res) => {
   } catch (err) {
     res.status(500).send('Error fetching movies');
   }
-});
+});require('dotenv').config();
+const mongoURI = process.env.MONGODB_URI;
+
 
 
 app.listen(PORT, () => {
