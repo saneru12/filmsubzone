@@ -54,6 +54,13 @@ app.get('/movies', async (req, res) => {
 });require('dotenv').config();
 const mongoURI = process.env.MONGODB_URI;
 
+app.get('/movies', (req, res) => {
+  res.json([
+    { title: 'Inception', year: 2010 },
+    { title: 'Interstellar', year: 2014 }
+  ]);
+});
+
 
 
 app.listen(PORT, () => {
