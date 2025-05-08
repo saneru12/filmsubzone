@@ -61,11 +61,10 @@ app.get('/movies', (req, res) => {
   ]);
 });
 
-
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
 app.get('/api/test', (req, res) => {
-  res.json({ message: "Backend working successfully!" });
+  res.json({ status: 'ok', message: 'Backend API working fine!' });
 });
