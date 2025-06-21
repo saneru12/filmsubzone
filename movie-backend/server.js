@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -8,19 +9,18 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
-// ✅ MongoDB URL එක 
-const uri = "mongodb+srv://saneruthisadara224:odRZrw54NKb4cuJD@cluster0.fv5fx3i.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
+// Connect MongoDB
+const uri = process.env.MONGODB_URI;
 mongoose.connect(uri)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error("DB connection error:", err));
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch(err => console.error("❌ DB connection error:", err));
 
-// 🎬 Schema එක
+// Schema
 const movieSchema = new mongoose.Schema({
   poster: String,
   quality: String,
   language: String,
-  genres: String,
+  genres: [String],
   title: String,
   year: Number,
   trailer: String,
@@ -29,10 +29,9 @@ const movieSchema = new mongoose.Schema({
   link720: String,
   description: String,
 });
-
 const Movie = mongoose.model("Movie", movieSchema);
 
-// 🛠️ POST route එක
+// POST route
 app.post("/add-movie", async (req, res) => {
   try {
     const movie = new Movie(req.body);
@@ -44,6 +43,7 @@ app.post("/add-movie", async (req, res) => {
   }
 });
 
+// GET route
 app.get('/movies', async (req, res) => {
   try {
     const movies = await Movie.find();
@@ -51,20 +51,13 @@ app.get('/movies', async (req, res) => {
   } catch (err) {
     res.status(500).send('Error fetching movies');
   }
-});require('dotenv').config();
-const mongoURI = process.env.MONGODB_URI;
+});
 
-app.get('/movies', (req, res) => {
-  res.json([
-    { title: 'Inception', year: 2010 },
-    { title: 'Interstellar', year: 2014 }
-  ]);
+// Test route
+app.get('/api/test', (req, res) => {
+  res.json({ status: 'ok', message: 'Backend API working fine!' });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
-app.get('/api/test', (req, res) => {
-  res.json({ status: 'ok', message: 'Backend API working fine!' });
+  console.log(`🚀 Server is running on port ${PORT}`);
 });

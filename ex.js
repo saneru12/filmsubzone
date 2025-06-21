@@ -1,4 +1,4 @@
-const sheetURL = 'https://filmsubzone-production.up.railway.app/movies';
+const sheetURL = 'https://shore-luxuriant-jelly.glitch.me/movies';
 let selectedLanguage = 'null';
 let selectedGenre = 'null';
 let selectedYear = 'null';
@@ -8,29 +8,29 @@ function loadMovies() {
   function generateMovieId(title, year) {
     return `${title}-${year}`.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]/g, '');
   }
-  
-  const container = document.getElementById('movieList');
-  //loding
-  container.innerHTML = `
-<div class="col-12 d-flex justify-content-center">
-  <dotlottie-player 
-    src="https://lottie.host/ddf15a75-9c01-4689-a871-2ce907ae0f7c/vIDwnXf6Vv.lottie" 
-    background="transparent" 
-    speed="1" 
-    style="width: 300px; height: 300px;" 
-    loop 
-    autoplay>
-  </dotlottie-player>
-</div>
-`;
 
+  const container = document.getElementById('movieList');
+  container.innerHTML = `
+    <div class="col-12 d-flex justify-content-center">
+      <dotlottie-player 
+        src="https://lottie.host/ddf15a75-9c01-4689-a871-2ce907ae0f7c/vIDwnXf6Vv.lottie" 
+        background="transparent" 
+        speed="1" 
+        style="width: 300px; height: 300px;" 
+        loop 
+        autoplay>
+      </dotlottie-player>
+    </div>
+  `;
 
   fetch(sheetURL)
     .then(res => res.json())
     .then(data => {
       const filtered = data.filter(movie => {
         const lang = (movie.language || '').trim().toLowerCase();
-        const genres = movie.genres ? movie.genres.split(',').map(g => g.trim().toLowerCase()) : [];
+        const genres = Array.isArray(movie.genres)
+          ? movie.genres.map(g => g.trim().toLowerCase())
+          : [];
         const year = (movie.year || '').toString().trim();
         const title = (movie.title || '').toLowerCase();
 
@@ -42,7 +42,7 @@ function loadMovies() {
         return langMatch && genreMatch && yearMatch && titleMatch;
       });
 
-      const allMoviesButton = document.querySelector('[data-language="all"]'); // Select the "All Movie" button
+      const allMoviesButton = document.querySelector('[data-language="all"]');
 
       if (filtered.length === 0) {
         container.innerHTML = `
@@ -51,29 +51,21 @@ function loadMovies() {
               Click the <strong>All Movies</strong> button to view all available movies.
             </p>
           </div>`;
-
-        // Highlight the 'All Movies' button if no movies are found
-        if (allMoviesButton) {
-          allMoviesButton.classList.add('highlight-btn');
-        }
-
+        if (allMoviesButton) allMoviesButton.classList.add('highlight-btn');
         return;
       }
 
-      // Remove highlight from the 'All Movies' button if movies are found
-      if (allMoviesButton) {
-        allMoviesButton.classList.remove('highlight-btn');
-      }
+      if (allMoviesButton) allMoviesButton.classList.remove('highlight-btn');
 
       container.innerHTML = '';
       filtered.forEach(movie => {
-        const genreBadges = movie.genres
-          ? movie.genres.split(',').map(g => `<span class="badge bg-secondary me-1">${g.trim()}</span>`).join(' ')
+        const genreBadges = Array.isArray(movie.genres)
+          ? movie.genres.map(g => `<span class="badge bg-secondary me-1">${g.trim()}</span>`).join(' ')
           : '';
-      
-          const movieId = generateMovieId(movie.title, movie.year);
-          const moviePageURL = `movie.html?id=${movieId}`;
-      
+
+        const movieId = generateMovieId(movie.title, movie.year);
+        const moviePageURL = `movie.html?id=${movieId}`;
+
         const card = `
           <div class="col-md-3 col-sm-6 mb-4">
             <div class="card movie-card h-100">
@@ -89,23 +81,23 @@ function loadMovies() {
                 <a href="${moviePageURL}" class="text-decoration-none">
                   <h6 class="movie-title">${movie.title} (${movie.year})</h6>
                 </a>
-      
+
                 <a href="${movie.trailer}" class="btn btn-outline-primary btn-sm w-100 mt-2">Watch Trailer</a>
                 <h5 class="badge bg-primary text-white mb-2">Download</h5>
                 <a href="${movie.subtitle}" class="btn btn-outline-primary btn-sm w-100 mt-2">උපසිරැසි</a>
                 <a href="${movie.link1080}" class="btn btn-outline-primary btn-sm w-100 mt-2">1080p</a>
                 <a href="${movie.link720}" class="btn btn-outline-primary btn-sm w-100 mt-2">720p</a>
-      
+
                 <button onclick="shareMovie('${movie.title}', '${moviePageURL}')" class="btn btn-outline-success btn-sm w-100 mt-2">🔗 Share</button>
               </div>
             </div>
           </div>
         `;
         container.innerHTML += card;
-      });      
+      });
     })
     .catch(error => {
-      container.innerHTML = `<div class="col-12"><p class="text-center text-danger">Error loading data.Relode the page</p></div>`;
+      container.innerHTML = `<div class="col-12"><p class="text-center text-danger">Error loading data. Reload the page</p></div>`;
       console.error("Error fetching data:", error);
     });
 }
@@ -154,8 +146,8 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   loadMovies();
-  
 });
+
 function shareMovie(title, url) {
   if (navigator.share) {
     navigator.share({
@@ -175,6 +167,5 @@ var carousel = new bootstrap.Carousel(myCarousel, {
   interval: 3000,
   pause: false,
   ride: 'carousel',
-  wrap: true // Ensure loop is enabled!
+  wrap: true
 });
-
