@@ -5,6 +5,9 @@ let selectedYear = 'null';
 let searchKeyword = '';
 
 function loadMovies() {
+  // ✅ Sමොහොතක් රැදෙන්න
+  document.getElementById('downloadLoader').style.display = 'block';
+
   function generateMovieId(title, year) {
     return `${title}-${year}`.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]/g, '');
   }
@@ -52,6 +55,9 @@ function loadMovies() {
             </p>
           </div>`;
         if (allMoviesButton) allMoviesButton.classList.add('highlight-btn');
+        
+        // ✅ Hide the loading overlay
+        document.getElementById('downloadLoader').style.display = 'none';
         return;
       }
 
@@ -95,9 +101,13 @@ function loadMovies() {
         `;
         container.innerHTML += card;
       });
+
+      // ✅ Hide the loading overlay
+      document.getElementById('downloadLoader').style.display = 'none';
     })
     .catch(error => {
       container.innerHTML = `<div class="col-12"><p class="text-center text-danger">Error loading data. Reload the page</p></div>`;
+      document.getElementById('downloadLoader').style.display = 'none'; // Hide on error
       console.error("Error fetching data:", error);
     });
 }
