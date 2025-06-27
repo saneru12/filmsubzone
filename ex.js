@@ -90,9 +90,10 @@ function loadMovies() {
 
                 <a href="${movie.trailer}" class="btn btn-outline-primary btn-sm w-100 mt-2">Watch Trailer</a>
                 <h5 class="badge bg-primary text-white mb-2">Download</h5>
-                <a href="${movie.subtitle}" class="btn btn-outline-primary btn-sm w-100 mt-2">උපසිරැසි</a>
-                <a href="${movie.link1080}" class="btn btn-outline-primary btn-sm w-100 mt-2">1080p</a>
-                <a href="${movie.link720}" class="btn btn-outline-primary btn-sm w-100 mt-2">720p</a>
+                <a href="${movie.link1080}" onclick="showLoading()" class="btn btn-outline-primary btn-sm w-100 mt-2">1080p</a>
+                <a href="${movie.link720}" onclick="showLoading()" class="btn btn-outline-primary btn-sm w-100 mt-2">720p</a>
+                <a href="${movie.subtitle}" onclick="showLoading()" class="btn btn-outline-primary btn-sm w-100 mt-2">උපසිරැසි</a>
+
 
                 <button onclick="shareMovie('${movie.title}', '${moviePageURL}')" class="btn btn-outline-success btn-sm w-100 mt-2">🔗 Share</button>
               </div>
@@ -111,6 +112,16 @@ function loadMovies() {
       console.error("Error fetching data:", error);
     });
 }
+
+function showLoading() {
+  document.getElementById('downloadLoader').style.display = 'block';
+
+  // Auto-hide after few seconds (in case download doesn't start instantly)
+  setTimeout(() => {
+    document.getElementById('downloadLoader').style.display = 'none';
+  }, 1000); // 1 seconds
+}
+
 
 window.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.language-filter').forEach(item => {
