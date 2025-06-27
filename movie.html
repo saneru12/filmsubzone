@@ -104,20 +104,63 @@
     function generateMovieId(title, year) {
       return `${title}-${year}`.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]/g, '');
     }
-
-    function showDownloadLoading(link) {
+function showDownloadLoading(link) {
   const loader = document.getElementById('downloadLoader');
   loader.style.display = 'block';
 
-  // Go to the download link in the same tab after short delay
-  setTimeout(() => {
-    window.location.href = link;
-  }, 500); // short delay to show loader
+  // Open new tab and show a custom message
+  const win = window.open('', '_blank');
+  win.document.write(`
+    <html>
+    <head>
+      <title>Downloading...</title>
+      <style>
+        body {
+          background-color: #111;
+          color: white;
+          font-family: sans-serif;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          margin: 0;
+        }
+        h1 {
+          font-size: 24px;
+          margin-bottom: 20px;
+        }
+        p {
+          font-size: 16px;
+          max-width: 400px;
+          text-align: center;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>📥 Download is starting...</h1>
+      <p>ඔබගේ ගොනුව බාගැනීම් වීමට නියමිතයි.<br>
+      <strong>Downlode</strong> වීම ආරම්බ උන පසු මෙම tab එක <u>ඔබම</u> close කරන්න.</p>
+    </body>
+    </html>
+  `);
 
-  // Hide loader after 8 seconds (whether download or cancel)
+  // Start the actual download
+  win.location.href = link;
+
+  // Detect tab close
+  const check = setInterval(() => {
+    if (win.closed) {
+      clearInterval(check);
+      loader.style.display = 'none';
+    }
+  }, 500);
+
+  // Fallback hide
   setTimeout(() => {
+    clearInterval(check);
     loader.style.display = 'none';
-  }, 6000); // 6 seconds
+  }, 15000);
 }
 
 
@@ -169,9 +212,10 @@
               <p class="mt-3"><strong>සිංහල උපසිරැසි සහිතව</strong></p>
 
               <a href="${movie.trailer}" class="btn btn-outline-warning btn-sm mb-2">🎬 Watch Trailer</a><br>
-              <a href="#" onclick="showDownloadLoading('${movie.subtitle}')" class="btn btn-outline-success btn-sm mb-2">📄 උපසිරැසි</a><br>
+              <a href="javascript:void(0);" onclick="showDownloadLoading('${movie.subtitle}')" class="btn btn-outline-success btn-sm mb-2">📄 උපසිරැසි</a><br>
               <button onclick="showDownloadLoading('${movie.link1080}')" class="btn btn-outline-primary btn-sm mb-2">🔽 Download 1080p</button><br>
               <button onclick="showDownloadLoading('${movie.link720}')" class="btn btn-outline-primary btn-sm mb-2">🔽 Download 720p</button><br>
+
 
               <p class="mt-3">${movie.description || 'No description available.'}</p>
             </div>

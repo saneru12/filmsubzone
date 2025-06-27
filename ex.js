@@ -119,7 +119,7 @@ function showLoading() {
   // Auto-hide after few seconds (in case download doesn't start instantly)
   setTimeout(() => {
     document.getElementById('downloadLoader').style.display = 'none';
-  }, 6000); // 6 seconds
+  }, 60000); // 6 seconds
 }
 
 
