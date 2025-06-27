@@ -81,9 +81,10 @@
           return;
         }
 
-        const genreBadges = movie.genres
-          ? movie.genres.split(',').map(g => `<span class="badge bg-secondary me-1">${g.trim()}</span>`).join(' ')
-          : '';
+        const genreBadges = typeof movie.genres === 'string'
+  ? movie.genres.split(',').map(g => `<span class="badge bg-secondary me-1">${g.trim()}</span>`).join(' ')
+  : '';
+
 
    // Inside your container.innerHTML = `...` section:
    container.innerHTML = `
@@ -167,6 +168,6 @@ document.head.appendChild(style);
       });
   </script>
   
-  <script src="ex.js"></script>
+
 </body>
 </html>
