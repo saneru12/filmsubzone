@@ -113,16 +113,6 @@ function loadMovies() {
     });
 }
 
-function showLoading() {
-  document.getElementById('downloadLoader').style.display = 'block';
-
-  // Auto-hide after few seconds (in case download doesn't start instantly)
-  setTimeout(() => {
-    document.getElementById('downloadLoader').style.display = 'none';
-  }, 50000); // 6 seconds
-}
-
-
 window.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.language-filter').forEach(item => {
     item.addEventListener('click', function (e) {
